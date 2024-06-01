@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Event Bubbling and Capturing</title>
+    <style>
+        .outer {
+            padding: 20px;
+            border: 2px solid red;
+        }
+        .middle {
+            padding: 20px;
+            border: 2px solid green;
+        }
+        .inner {
+            padding: 20px;
+            border: 2px solid blue;
+        }
+    </style>
+</head>
+<body>
+    <div class="outer">Outer
+        <div class="middle">Middle
+            <div class="inner">Inner</div>
+        </div>
+    </div>
+
+    <script>
+        const outer = document.querySelector('.outer');
+        const middle = document.querySelector('.middle');
+        const inner = document.querySelector('.inner');
+
+        function logEvent(event) {
+            console.log(`${event.currentTarget.className} captured: ${event.eventPhase === 1}, bubbled: ${event.eventPhase === 3}`);
+        }
+
+        outer.addEventListener('click', logEvent, true); // Capturing phase
+        middle.addEventListener('click', logEvent, true); // Capturing phase
+        inner.addEventListener('click', logEvent, true); // Capturing phase
+
+        outer.addEventListener('click', logEvent, false); // Bubbling phase
+        middle.addEventListener('click', logEvent, false); // Bubbling phase
+        inner.addEventListener('click', logEvent, false); // Bubbling phase
+    </script>
+</body>
+</html>
